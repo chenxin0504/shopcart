@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html ng-app="shopApp">
+	<head>
+		<meta charset="UTF-8">
+		<title>angularjs购物车</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+		<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
+		<style type="text/css">
+			.navbar h1 {
+				color: #ADADAD;
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container" ng-controller="shopController">
+			<div class="navbar navbar-inverse">
+				<h1>angularjs购物车</h1>
+			</div>
+			<table class="table" ng-show="data.length">
+				<thead>
+					<tr>
+						<th>编号</th>
+						<th>名称</th>
+						<th>数量</th>
+						<th>单价</th>
+						<th>总价</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody> 
+					<tr ng-repeat="item in data">
+						<td ng-bind="item.id"></td>
+						<td ng-bind="item.name"></td>
+						<td>
+							<input type="button" class="btn btn-success" value="-" ng-click="getData($index,-1)" />
+							<input type="text" size="3" ng-model="item.quantity" ng-model-options="{updateOn:'blur'}" />
+							<input type="button" class="btn btn-success" value="+" ng-click="getData($index,1)" />
+						</td>
+						<td ng-bind="item.price"></td>
+						<td ng-bind="item.quantity * item.price | currency:'￥'"></td>
+						<td>
+							<input class="btn btn-success" type="button" value="移除" ng-click="del()" />
+						</td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>
+							总数量：{{getTotality()}}
+						</td>
+						<td></td>
+						<td>
+							 总价：{{getPrice() | currency:'￥'}}
+						</td>
+						<td>
+							<input type="button" value="清空购物车" class="btn btn-danger" ng-click="data=[]" />
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+			<div class="alert alert-danger" ng-hide='data.length'>
+				<p>亲，购物车空了呦</p>
+			</div>
+		</div>
+		<script type="text/javascript" src="angular.js"></script>
+		<script type="text/javascript" src="controller.js"></script>
+	</body>
+</html>
